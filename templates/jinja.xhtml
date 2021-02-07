@@ -3,9 +3,55 @@
     <head>
         <meta charset="utf-8"/>
         <title>Pääteohjaus 2 - TIES4080 - mallipohja</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css.css') }}">
     </head>
     <body>
-      
+		<form action="" method="POST">
+			<h1>Pelilauta</h1>
+			<p>	
+				Kerro luotavan pelialueen koko ja pelaajien nimet. Ruudukko on yhtä monta ruutua leveä kuin korkea.
+			</p>
+			<fieldset>
+				<p>Laudan koko <input type="number" value="{{koko}}" name="koko" /></p>
+				<p>Pelaaja 1 <input type="text" value="{{p1}}" name="p1" /></p>
+				<p>Pelaaja 2 <input type="text" value="{{p2}}" name="p2" /></p>
+			</fieldset>
+			<p></p>
+			<input type="submit" name="nappi" value="Luo pelilauta">
+			<p></p>
+		</form>
+
+		<!--
+			Rakentaa oikeanmallisen shakkilaudan koon mukaan. Tiedän, se on hirveä :D
+		-->
+		<table class="chess-board">
+			<tbody>
+				{% for i in range(koko) %}
+					{% if i % 2 == 0 %}
+						<tr>
+							{% for j in range(koko) %}
+								{% if j % 2 == 0 %}
+									<td class="light"> {% if j == i %}  <img src="{{ url_for('static', filename='blue.svg') }}"> {%endif%} </td>
+								{% else %}
+									<td class="dark"> {% if j == i %}  <img src="{{ url_for('static', filename='blue.svg') }}"> {%endif%}  </td>
+								{% endif %}
+							{% endfor %}
+						</tr>
+					{% else %}
+						<tr>
+							{% for j in range(koko) %}
+								{% if j % 2 == 0 %}
+									<td class="dark"> {% if j == i %}  <img src="{{ url_for('static', filename='blue.svg') }}"> {%endif%}  </td>
+								{% else %}
+									<td class="light"> {% if j == i %}  <img src="{{ url_for('static', filename='blue.svg') }}"> {%endif%}  </td>
+								{% endif %}
+							{% endfor %}
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+
 <!-- HTMLinspectoria käytetään validointiin. Kannattaa
 vielä varmuuden vuoksi ajaa välillä myös W3C:n validaattori -->
 <!-- Sivun validoinnin W3C:n validaattorilla voit tehdä milloin tahansa näppäinyhdistelmällä CTRL+ALT+V -->
